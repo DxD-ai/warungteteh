@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warung Sembako</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+/* RESET */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+body { color:#333; line-height:1.6; scroll-behavior:smooth; background: linear-gradient(135deg,#d0f0c0,#a8e6cf); }
+
+/* HEADER */
+header {
+    position: sticky;
+    top:0;
+    z-index:100;
+    backdrop-filter: blur(10px);
+    background: rgba(76,175,80,0.6);
+    box-shadow:0 4px 15px rgba(0,0,0,0.2);
+    transition: background 0.3s;
+}
+header.scrolled { background: rgba(76,175,80,0.9); }
+header .container { display:flex; justify-content:space-between; align-items:center; padding:15px 20px; max-width:1200px; margin:auto; }
+.logo { font-size:1.8rem; font-weight:bold; letter-spacing:1px; color:white; text-shadow:0 2px 4px rgba(0,0,0,0.4); }
+nav ul { list-style:none; display:flex; gap:25px; transition:right 0.3s ease-in-out; }
+nav a { color:white; text-decoration:none; font-weight:500; transition: all 0.3s ease; }
+nav a:hover { color:#ffe4c4; transform:scale(1.1); }
+.hamburger { display:none; font-size:1.5rem; cursor:pointer; color:white; }
+
+/* HERO */
+.hero {
+    height:80vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+}
+.hero-text {
+    position:relative; z-index:2;
+    opacity:0; transform:translateY(30px);
+    animation: fadeInUp 1s forwards;
+    color:#fff;
+    text-shadow: 1px 1px 6px rgba(0,0,0,0.5);
+}
+.hero-text h2 { font-size:2.8rem; margin-bottom:15px; }
+.hero-text p { font-size:1.2rem; margin-bottom:20px; }
+.hero button {
+    padding:12px 30px;
+    font-size:1rem;
+    background: rgba(255,228,196,0.5);
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+    backdrop-filter: blur(5px);
+    transition:all 0.3s ease;
+}
+.hero button:hover { background-color: rgba(255,228,196,0.7); transform:scale(1.05); box-shadow:0 5px 15px rgba(0,0,0,0.3); }
+
+/* PRODUCTS */
+.products { padding:60px 20px; text-align:center; }
+.section-title { font-size:2rem; margin-bottom:40px; color:#4CAF50; position:relative; }
+.section-title::after { content:''; display:block; width:80px; height:4px; background:#4CAF50; margin:10px auto 0; border-radius:2px; }
+.products-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:25px; }
+.product-card {
+    background: rgba(255,255,255,0.15);
+    padding:20px;
+    border-radius:20px;
+    backdrop-filter: blur(8px);
+    box-shadow:0 4px 20px rgba(0,0,0,0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor:pointer;
+}
+.product-card:hover { transform:translateY(-10px) scale(1.05); box-shadow:0 10px 25px rgba(0,0,0,0.25);}
+.product-card h3 { font-size:1.2rem; margin-bottom:8px; color:#4CAF50; }
+.product-card p { font-size:0.95rem; color:#333; }
+
+/* ABOUT */
+.about { padding:60px 20px; }
+.about-container {
+    display:flex;
+    align-items:center;
+    gap:40px;
+    max-width:1200px;
+    margin:auto;
+    flex-wrap:wrap;
+    opacity:0;
+    transform:translateY(30px);
+    transition:all 1s ease;
+}
+.about-container.show { opacity:1; transform:translateY(0); }
+.about-text {
+    flex:1;
+    background: rgba(255,255,255,0.15);
+    padding:30px;
+    border-radius:20px;
+    backdrop-filter: blur(8px);
+    box-shadow:0 6px 20px rgba(0,0,0,0.2);
+}
+
+/* CONTACT */
+.contact { padding:60px 20px; text-align:center; }
+.contact p { margin:10px 0; }
+.contact button {
+    margin-top:15px;
+    padding:12px 25px;
+    font-size:1rem;
+    border-radius:12px;
+    border:none;
+    background: rgba(76,175,80,0.6);
+    color:white;
+    cursor:pointer;
+    backdrop-filter: blur(5px);
+    transition:all 0.3s ease;
+}
+.contact button:hover { background-color: rgba(76,175,80,0.8); transform:scale(1.05); }
+
+/* FOOTER */
+footer {
+    background: rgba(0,0,0,0.5);
+    color:white;
+    text-align:center;
+    padding:20px 0;
+    backdrop-filter: blur(8px);
+}
+
+/* ANIMATIONS */
+@keyframes fadeInUp { 0% {opacity:0; transform:translateY(30px);} 100% {opacity:1; transform:translateY(0);} }
+
+/* RESPONSIVE */
+@media(max-width:992px) { .about-container { flex-direction:column; } }
+@media(max-width:768px) {
+    nav ul {
+        position:fixed;
+        top:0;
+        right:-100%;
+        height:100%;
+        width:60%;
+        background: rgba(76,175,80,0.9);
+        flex-direction:column;
+        padding-top:60px;
+        gap:30px;
+        transition:right 0.3s ease-in-out;
+    }
+    nav ul.active { right:0; }
+    .hamburger { display:block; }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1 class="logo">Warung Sembako</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#products">Jajanan</a></li>
+                <li><a href="#about">Tentang</a></li>
+                <li><a href="#contact">Kontak</a></li>
+            </ul>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<section id="home" class="hero">
+    <div class="hero-text">
+        <h2>Selamat Datang di Warung Sembako</h2>
+        <p>Cemilan & jajanan enak, lengkap untuk kebutuhan sehari-hari!</p>
+        <button onclick="orderNow()">Pesan Sekarang</button>
+    </div>
+</section>
+
+<section id="products" class="products">
+    <h2 class="section-title">Jajanan Favorit</h2>
+    <div class="products-grid">
+        <div class="product-card"><h3>Keripik</h3><p>Keripik renyah, rasa gurih alami.</p></div>
+        <div class="product-card"><h3>Kue</h3><p>Kue manis dan legit, cocok untuk camilan.</p></div>
+        <div class="product-card"><h3>Minuman Segar</h3><p>Es teh, es cincau, dan minuman tradisional lainnya.</p></div>
+        <div class="product-card"><h3>Snack Lainnya</h3><p>Berbagai jajanan ringan, camilan harian siap santap.</p></div>
+    </div>
+</section>
+
+<section id="about" class="about">
+    <div class="about-container">
+        <div class="about-text">
+            <h2>Tentang Warung Kami</h2>
+            <p>Warung Sembako menyediakan berbagai jajanan ringan dan kebutuhan sehari-hari sejak 2015. Semua bahan bersih, segar, dan harga terjangkau. Cocok untuk semua usia!</p>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="contact">
+    <h2 class="section-title">Kontak & Pesan</h2>
+    <p><i class="fas fa-map-marker-alt"></i> Jl. Raya Javanaspa, Cidahu, Sukabumi</p>
+    <p><i class="fas fa-phone"></i> 0812-1473-5375 (WhatsApp)</p>
+    <p><i class="fas fa-envelope"></i> warungsembako@example.com</p>
+    <button onclick="orderNow()">Pesan via WhatsApp</button>
+</section>
+
+<footer>
+    <p>&copy; 2026 Warung Sembako. All rights reserved.</p>
+</footer>
+
+<script>
+// Hamburger menu toggle
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('nav ul');
+hamburger.addEventListener('click', ()=>{ navLinks.classList.toggle('active'); });
+
+// WhatsApp order
+function orderNow(){ window.open("https://wa.me/6281214735375","_blank"); }
+
+// About container fade-in
+const aboutContainer = document.querySelector('.about-container');
+window.addEventListener('scroll', ()=>{
+    const trigger = window.innerHeight/1.2;
+    const top = aboutContainer.getBoundingClientRect().top;
+    if(top<trigger){ aboutContainer.classList.add('show'); }
+});
+</script>
+
+</body>
+</html>
